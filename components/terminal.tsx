@@ -4,11 +4,8 @@ import type React from "react";
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import ProjectGallery from "./project-gallery";
-import {
-  Volume2,
-  VolumeX,
-  Palette,
-} from "lucide-react";
+import { Volume2, VolumeX, Palette } from "lucide-react";
+import commands from "./commands";
 
 interface TerminalProps {
   onGuiStart: () => void;
@@ -323,253 +320,49 @@ export default function Terminal({ onGuiStart }: TerminalProps) {
   };
 
   const welcomeMessage = `
-██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗
-██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝
-██║ █╗ ██║█████╗  ██║     ██║     ██║   ██║██╔████╔██║█████╗  
-██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝  
-╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗
- ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝
+                              ####+++++++                 
+                        +#+#############+###+           
+                      ++######################+#        
+                     #+###########################      
+                     ###############################    
+                    ################################    
+                    ################################    
+                     ######++++++++++##############     
+                     ####+#+++####+----++#########      
+                   ++###+-++#######+++###########       
+                  #+++++.-+-+######++###########        
+                  ++#++-..+---+++#--+##########         
+                  -+++#-----++##+-..-#++++++##          
+                   -++#---++##++++-+++#---++###         
+                      +--++##########+#++++###          
+                     ++++++#############++##+           
+                      ##++++++++++#####++##--           
+                      +##+++++#####+++#+##              
+                     .-+#####+++++++++###               
+                     --++##############                 
+                    .-++++++########+                   
+               ###-..-+++++++#+##+++                    
+              +##+-.--++++++++##++++                    
+        -+#########+-+++++++++++++++                    
+  --++###############+++++++###++++##                   
++++###+++###############+++++#+++######+                
+#########################+++##############+             
+##########################++++#############++++         
+#########################++--+###############++#++-     
+#########################----++#####################+   
+#########################+--++########################  
+##########################---########################## 
+###########################-############################
 
-Welcome to my Interactive Portfolio Terminal!
-Arch Linux User | Full Stack Developer | Tech Enthusiast
+Welcome to Portfolio Terminal!
+Adarsh Pandit | Versatile | Entrepreneur
+
+- CEO: A Versatile Studio.
+- CO-FOUNDER & CTO: Voltsec.io, Safewings, The RD Group Of Industries.
 
 Type 'help' to see available commands or 'sudo gui start' for GUI mode.
 `;
 
-  const commands = {
-    help: [
-      "Available commands:",
-      "",
-      "  📋 GENERAL:",
-      "     about          - Learn about me",
-      "     contact        - Get in touch",
-      "     whoami         - Display current user",
-      "\n",
-      "  💼 PORTFOLIO:",
-      "     skills         - View my technical skills",
-      "     projects       - Browse my projects",
-      "     projects gallery - Open interactive project gallery",
-      "     experience     - View work experience",
-      "     education      - Academic background",
-      "\n",
-      "  🖥️  SYSTEM:",
-      "     neofetch       - System information",
-      "     ls             - List directory contents",
-      "     cd             - Change directory",
-      "     pwd            - Print working directory",
-      "     clear          - Clear terminal",
-      "\n",
-      "  🎨 CUSTOMIZATION:",
-      "     themes         - List available themes",
-      "     theme <name>   - Change terminal theme",
-      "     sound toggle   - Toggle sound effects",
-      "     ambient toggle - Toggle ambient sounds",
-      "\n",
-      "  🚀 SPECIAL:",
-      "     sudo gui start - Launch GUI mode",
-      "     exit           - Close terminal",
-      "",
-      "Pro tip: Use Tab for autocomplete and ↑/↓ for command history",
-    ],
-    about: [
-      "👨‍💻 About Me:",
-      "=============",
-      "",
-      "Hey there! I'm a passionate full-stack developer and Arch Linux enthusiast.",
-      "I love exploring the intersection of technology and creativity, working across",
-      "multiple domains from UI/UX design to DevOps, AI/ML to 3D modeling.",
-      "\n",
-      "My journey in tech started with curiosity about how things work under the hood,",
-      "which naturally led me to Arch Linux and the philosophy of understanding",
-      "every component of your system.",
-      "\n",
-      "When I'm not coding, you'll find me:",
-      "🔧 Customizing my Arch setup",
-      "🌟 Contributing to open source projects",
-      "🧪 Experimenting with new technologies",
-      "🎮 Building games and 3D experiences",
-      "🏗️ Diving deep into system architecture",
-    ],
-    skills: [
-      "Technical Skills:",
-      "================",
-      "\n",
-      "🎨 Frontend Development:",
-      "   • React, Next.js, Vue.js, Svelte",
-      "   • TypeScript, JavaScript (ES6+)",
-      "   • Tailwind CSS, Styled Components",
-      "   • Three.js, WebGL, Canvas API",
-      "\n",
-      "⚙️ Backend Development:",
-      "   • Node.js, Python, Go, Rust",
-      "   • Express, FastAPI, Gin",
-      "   • PostgreSQL, MongoDB, Redis",
-      "   • GraphQL, REST APIs",
-      "\n",
-      "☁️ DevOps & Infrastructure:",
-      "   • Docker, Kubernetes, Podman",
-      "   • AWS, GCP, Azure",
-      "   • CI/CD (GitHub Actions, GitLab)",
-      "   • Terraform, Ansible",
-      "\n",
-      "🤖 AI/ML & Data:",
-      "   • TensorFlow, PyTorch, Scikit-learn",
-      "   • Computer Vision, NLP",
-      "   • Data Analysis with Pandas",
-      "   • MLOps and Model Deployment",
-      "\n",
-      "🎮 Game Development:",
-      "   • Unity, Unreal Engine",
-      "   • Godot, Web-based games",
-      "   • C#, C++, JavaScript",
-      "\n",
-      "💻 System Programming:",
-      "   • Linux kernel development",
-      "   • Shell scripting (Bash, Zsh)",
-      "   • System administration",
-      "   • Network programming",
-    ],
-    projects: [
-      "Featured Projects:",
-      "=================",
-      "\n",
-      "🚀 Project Alpha - AI-Powered Code Assistant",
-      "   • Built with Python, FastAPI, and Transformers",
-      "   • Helps developers write better code with AI suggestions",
-      "   • Deployed on Kubernetes with auto-scaling",
-      "\n",
-      "🎮 NeoGame Engine - 3D Game Engine",
-      "   • Written in Rust with WebAssembly support",
-      "   • Cross-platform rendering with Vulkan/WebGL",
-      "   • Used in 3 published indie games",
-      "\n",
-      "🌐 CloudSync - Distributed File System",
-      "   • Go-based microservices architecture",
-      "   • Real-time synchronization across devices",
-      "   • Handles 10M+ files with 99.9% uptime",
-      "\n",
-      "🤖 MLOps Pipeline - Automated ML Deployment",
-      "   • Docker + Kubernetes + MLflow",
-      "   • Automated model training and deployment",
-      "   • Reduced deployment time by 80%",
-      "\n",
-      "🎨 ArchRice - Linux Customization Suite",
-      "   • Shell scripts for Arch Linux theming",
-      "   • 1000+ GitHub stars, 200+ forks",
-      "   • Featured in r/unixporn multiple times",
-      "\n",
-      "View more at: github.com/yourhandle",
-    ],
-    experience: [
-      "Work Experience:",
-      "===============",
-      "\n",
-      "💼 Senior Full Stack Developer | TechCorp (2022-Present)",
-      "   • Lead development of microservices architecture",
-      "   • Mentored 5 junior developers",
-      "   • Improved system performance by 40%",
-      "\n",
-      "🚀 DevOps Engineer | StartupXYZ (2020-2022)",
-      "   • Built CI/CD pipelines from scratch",
-      "   • Managed AWS infrastructure for 1M+ users",
-      "   • Reduced deployment time from hours to minutes",
-      "\n",
-      "🎯 Frontend Developer | WebAgency (2019-2020)",
-      "   • Developed responsive web applications",
-      "   • Collaborated with design teams on UX/UI",
-      "   • Delivered 20+ client projects on time",
-      "\n",
-      "🔧 Freelance Developer (2018-2019)",
-      "   • Built custom solutions for small businesses",
-      "   • Specialized in e-commerce and CMS development",
-      "   • Maintained 98% client satisfaction rate",
-    ],
-    education: [
-      "Education & Certifications:",
-      "==========================",
-      "\n",
-      "🎓 Bachelor of Computer Science",
-      "   University of Technology (2015-2019)",
-      "   • Graduated Magna Cum Laude (GPA: 3.8/4.0)",
-      "   • Specialized in Systems Programming",
-      "   • Captain of Programming Contest Team",
-      "\n",
-      "📜 Certifications:",
-      "   • AWS Solutions Architect Professional",
-      "   • Kubernetes Administrator (CKA)",
-      "   • Google Cloud Professional DevOps Engineer",
-      "   • MongoDB Certified Developer",
-      "\n",
-      "🏆 Achievements:",
-      "   • 1st Place - National Programming Contest 2019",
-      "   • Open Source Contributor of the Year 2021",
-      "   • Speaker at 5+ tech conferences",
-      "   • Published 10+ technical articles",
-    ],
-    contact: [
-      "Get In Touch:",
-      "============",
-      "\n",
-      "📧 Email: your.email@domain.com",
-      "🐙 GitHub: github.com/yourhandle",
-      "💼 LinkedIn: linkedin.com/in/yourprofile",
-      "🐦 Twitter: @yourhandle",
-      "🌐 Website: yourportfolio.dev",
-      "💬 Discord: YourHandle#1234",
-      "\n",
-      "📍 Location: Your City, Country",
-      "🕒 Timezone: UTC+X",
-      "\n",
-      "💡 Always open to interesting projects and collaborations!",
-      "   Feel free to reach out if you want to build something amazing together.",
-    ],
-    neofetch: [
-      "                   -`                    user@arch-portfolio",
-      "                  .o+`                   ─────────────────────",
-      "                 `ooo/                   OS: Arch Linux x86_64",
-      "                `+oooo:                  Host: Portfolio Terminal",
-      "               `+oooooo:                 Kernel: 6.1.0-arch1-1",
-      "               -+oooooo+:                Uptime: 2 hours, 34 mins",
-      "             `/:-:++oooo+:               Packages: 1337 (pacman)",
-      "            `/++++/+++++++:              Shell: zsh 5.9",
-      "           `/++++++++++++++:             Resolution: 1920x1080",
-      "          `/+++ooooooooo+++/             DE: Custom (i3wm)",
-      "         ./ooosssso++osssssso+`          WM: i3-gaps",
-      "        .oossssso-````/ossssss+`         Theme: Nord [GTK3]",
-      "       -osssssso.      :ssssssso.        Icons: Papirus-Dark",
-      "      :osssssss/        osssso+++.       Terminal: alacritty",
-      "     /ossssssss/        +ssssooo/-       CPU: AMD Ryzen 9 5900X",
-      "   `/ossssso+/:-        -:/+osssso+-     GPU: NVIDIA RTX 3080",
-      "  `+sso+:-`                 `.-/+oso:    Memory: 32GB DDR4",
-      " `++:.                           `-/+/",
-      " .`                                 `/",
-    ],
-    ls: [
-      "projects/",
-      "skills/",
-      "experience/",
-      "contact/",
-      "README.md",
-      "portfolio.sh*",
-    ],
-    pwd: [`${currentDirectory}`],
-    whoami: ["Dev Adarsh Pandit"],
-    clear: [],
-    themes: [
-      "Available Terminal Themes:",
-      "=========================",
-      "",
-      "🟢 matrix     - Classic green-on-black Matrix style",
-      "🔵 cyberpunk  - Neon cyan and pink cyberpunk aesthetic",
-      "🟡 retro      - Warm amber vintage terminal",
-      "🔴 hacker     - Red-on-black hacker terminal",
-      "🌊 ocean      - Cool blue ocean depths",
-      "🌲 forest     - Natural green forest theme",
-      "",
-      "Usage: theme <name>",
-      "Example: theme cyberpunk",
-    ],
-  };
 
   useEffect(() => {
     // Show welcome message on load
@@ -577,7 +370,7 @@ Type 'help' to see available commands or 'sudo gui start' for GUI mode.
       input: "",
       output: welcomeMessage.split("\n"),
       timestamp: new Date().toLocaleTimeString(),
-      prompt: "~"
+      prompt: "~",
     };
     setHistory([welcomeCommand]);
     playSound("boot");
@@ -595,7 +388,7 @@ Type 'help' to see available commands or 'sudo gui start' for GUI mode.
     }
   }, [history]);
 
-  const dict = ["projects", "skills", "experience", "education", "contact"];
+  const dict = ["projects", "skills", "experience", "contact"];
 
   const handleCommand = (cmd: string) => {
     const trimmedCmd = cmd.trim().toLowerCase();
@@ -763,7 +556,9 @@ Type 'help' to see available commands or 'sudo gui start' for GUI mode.
     >
       <div className="w-[99%] mx-auto">
         {/* Terminal Header */}
-        <div className={`flex items-center justify-between p-2 bg-gray-900 rounded-t-lg border ${theme.border} border-b-gray-600`}>
+        <div
+          className={`flex items-center justify-between p-2 bg-gray-900 rounded-t-lg border ${theme.border} border-b-gray-600`}
+        >
           <div className="flex space-x-2">
             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -848,7 +643,9 @@ Type 'help' to see available commands or 'sudo gui start' for GUI mode.
 
           {/* Current Input */}
           <form onSubmit={handleSubmit} className="flex items-center">
-            <span className={`${theme.prompt} font-semibold`}>{getPrompt()}</span>
+            <span className={`${theme.prompt} font-semibold`}>
+              {getPrompt()}
+            </span>
             <input
               ref={inputRef}
               type="text"

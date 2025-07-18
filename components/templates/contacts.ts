@@ -1,0 +1,17 @@
+export const contact = [
+      "Get In Touch:",
+      "============",
+      "\n",
+      "📧 Email: adarshpanditdev@gmail.com",
+      "🐙 GitHub: github.com/DynamicAdi",
+      "💼 LinkedIn: linkedin.com/in/devadarsh",
+      "🐦 Twitter: @modern_coder",
+      "🌐 Website: devadarsh.tech",
+      "💬 Instagram: @A.Versatile.Studio",
+      "\n",
+      "📍 Location: Siliguri, West Bengal, India",
+      "🕒 Timezone: GMT+05:30",
+      "\n",
+      "💡 Always open to interesting projects and collaborations!",
+      "Feel free to reach out if you want to build something amazing together.",
+    ]

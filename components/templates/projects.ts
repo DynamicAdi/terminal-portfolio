@@ -1,0 +1,16 @@
+export const projects = [
+      "Featured Projects:",
+      "=================",
+      "\n",
+      "🚀 Project Alpha - AI-Powered Code Assistant",
+      "   • Built with Python, FastAPI, and Transformers",
+      "   • Helps developers write better code with AI suggestions",
+      "   • Deployed on Kubernetes with auto-scaling",
+      "\n",
+      "🎨 ArchRice - Linux Customization Suite",
+      "   • Shell scripts for Arch Linux theming",
+      "   • 1000+ GitHub stars, 200+ forks",
+      "   • Featured in r/unixporn multiple times",
+      "\n",
+      "View more at: github.com/dynamicAdi",
+    ]
