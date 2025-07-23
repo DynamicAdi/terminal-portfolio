@@ -11,7 +11,6 @@ export const help =  [
       "     projects       - Browse my projects",
       "     projects gallery - Open interactive project gallery",
       "     experience     - View work experience",
-      "     education      - Academic background",
       "\n",
       "  🖥️  SYSTEM:",
       "     neofetch       - System information",

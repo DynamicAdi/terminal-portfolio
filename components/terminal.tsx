@@ -3,9 +3,10 @@
 import type React from "react";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import ProjectGallery from "./project-gallery";
+
 import { Volume2, VolumeX, Palette } from "lucide-react";
 import commands from "./commands";
+import { useRouter } from "next/navigation";
 
 interface TerminalProps {
   onGuiStart: () => void;
@@ -19,6 +20,8 @@ interface Command {
 }
 
 export default function Terminal({ onGuiStart }: TerminalProps) {
+
+  const router = useRouter();
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<Command[]>([]);
   const [currentDirectory, setCurrentDirectory] = useState("~");
@@ -355,14 +358,13 @@ export default function Terminal({ onGuiStart }: TerminalProps) {
 ###########################-############################
 
 Welcome to Portfolio Terminal!
-Adarsh Pandit | Versatile | Entrepreneur
+Adarsh Pandit | Versatile | Entrepreneur | CEO, CTO, CO-Founder.\n
+-
 
-- CEO: A Versatile Studio.
-- CO-FOUNDER & CTO: Voltsec.io, Safewings, The RD Group Of Industries.
 
-Type 'help' to see available commands or 'sudo gui start' for GUI mode.
+Type 'help' to see available commands.
 `;
-
+  // Type 'help' to see available commands or 'sudo gui start' for GUI mode.
 
   useEffect(() => {
     // Show welcome message on load
@@ -433,7 +435,9 @@ Type 'help' to see available commands or 'sudo gui start' for GUI mode.
       output = [`Sound effects ${!soundEnabled ? "enabled" : "disabled"}`];
     } else if (trimmedCmd === "projects gallery") {
       playSound("success");
-      setShowProjectGallery(true);
+      // useRouter
+      router.push("/project-gallery");
+      // setShowProjectGallery(true);
       output = [
         "Opening project gallery...",
         "Loading interactive project showcase...",
@@ -619,23 +623,49 @@ Type 'help' to see available commands or 'sudo gui start' for GUI mode.
                   <span className="ml-1">{command.input}</span>
                 </div>
               )}
-              {command.output.map((line, lineIndex) => (
-                <div
-                  key={lineIndex}
-                  className={`${
-                    line.startsWith("Command not found")
-                      ? "text-red-400"
-                      : line.includes("Authentication successful") ||
-                        line.includes("Starting GUI")
-                      ? "text-green-400"
-                      : line.includes("sudo")
-                      ? "text-yellow-400"
-                      : "text-gray-300"
-                  } whitespace-pre-wrap`}
-                >
-                  {line}
-                </div>
-              ))}
+              {command.output.map((line, lineIndex) => {
+                const linkMatch = line.match(/\[link:\s*'([^']+)'\]/);
+                const url = linkMatch?.[1];
+                const label = linkMatch
+                ? line.replace(linkMatch[0], "").trim()
+                : line;
+                // console.log(label)
+
+                const className = line.startsWith("Command not found")
+                  ? "text-red-400"
+                  : line.includes("Authentication successful") ||
+                    line.includes("Starting GUI")
+                  ? "text-green-400"
+                  : line.includes("help")
+                  ? "text-yellow-400"
+                  : line.includes("Theme changed")
+                  ? "text-blue-400" 
+                  : line.includes("View more") ? "text-yellow-400"
+                  : "text-gray-300";
+
+                return (
+                  <div
+                    key={lineIndex}
+                    className={`${className} whitespace-pre-wrap`}
+                  >
+                    {url ? (
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        // className={`}
+                      >
+                        {label.split(": ")[0]}: {" "} 
+                        <span className="text-blue-400 hover:text-blue-200">
+                        {label.split(": ")[1]}
+                        </span>
+                      </a>
+                    ) : (
+                      label
+                    )}
+                  </div>
+                );
+              })}
             </div>
           ))}
 
@@ -667,9 +697,6 @@ Type 'help' to see available commands or 'sudo gui start' for GUI mode.
         </div>
 
         {/* Project Gallery Modal */}
-        {showProjectGallery && (
-          <ProjectGallery onClose={() => setShowProjectGallery(false)} />
-        )}
       </div>
     </div>
   );
