@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Space_Mono } from "next/font/google"
 import { Github, ExternalLink, Shield, Code, Zap, Terminal, Lock, Cpu } from 'lucide-react';
+import { fullProjectList, Project } from '@/components/templates/fullProjectList';
+
 export const dmMono = Space_Mono({
   subsets: ['latin'],
   weight: ['400'],
@@ -23,16 +25,16 @@ const ProjectCard = ({
 }) => {
   const getComplexityColor = (level: string) => {
     switch(level.toLowerCase()) {
-      case 'beginner': return 'text-white border-green-400/30 bg-green-400';
+      case 'low': return 'text-white border-green-500/30 bg-green-500';
       case 'intermediate': return 'text-white border-yellow-400/30 bg-yellow-400';
       case 'advanced': return 'text-white border-red-400/30 bg-red-400';
-      default: return 'text-white border-cyan-400/30 bg-cyan-400';
+      default: return 'text-white border-red-800/30 bg-red-800';
     }
   };
 
   const getComplexityIcon = (level: string) => {
     switch(level.toLowerCase()) {
-      case 'beginner': return <Shield className="w-3 h-3" />;
+      case 'low': return <Shield className="w-3 h-3" />;
       case 'intermediate': return <Code className="w-3 h-3" />;
       case 'advanced': return <Cpu className="w-3 h-3" />;
       default: return <Terminal className="w-3 h-3" />;
@@ -40,7 +42,7 @@ const ProjectCard = ({
   };
 
   return (
-    <div className="group relative bg-gray-900/90 border-2 border-green-500/50 rounded-lg overflow-hidden transition-allduration-500 backdrop-blur-sm  hover:shadow-[0_0_40px_rgba(34,197,94,0.2)] hover:border-green-400/80">
+    <div className="group relative bg-gray-900/90 border-2 border-green-500/50 rounded-lg transition-allduration-500 backdrop-blur-sm  hover:shadow-[0_0_40px_rgba(34,197,94,0.2)] hover:border-green-400/80">
       {/* Cyber grid background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="w-full h-full" style={{
@@ -51,6 +53,10 @@ const ProjectCard = ({
           backgroundSize: '20px 20px'
         }}></div>
       </div>
+              <div className={`absolute -top-3 right-3 px-2 py-1 rounded-full border text-xs ${dmMono.className} flex items-center gap-1 backdrop-blur-sm shadow-lg ${getComplexityColor(complexity)}`}>
+          {getComplexityIcon(complexity)}
+          {complexity}
+        </div>
 
       {/* Animated neon pulse effect */}
       {/* <div className="absolute inset-0 rounded-lg bg-green-500/5 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div> */}
@@ -59,20 +65,14 @@ const ProjectCard = ({
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
       {/* Image section with overlay */}
-      <div className="relative h-48 overflow-hidden">
-        <img 
+      {/* <div className="relative h- overflow-hidden">
+        {/* <img 
           src={image} 
           alt={title}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent"></div>
-        
-        {/* Complexity badge */}
-        <div className={`absolute top-3 right-3 px-2 py-1 rounded-full border text-xs ${dmMono.className} flex items-center gap-1 backdrop-blur-sm shadow-lg ${getComplexityColor(complexity)}`}>
-          {getComplexityIcon(complexity)}
-          {complexity}
-        </div>
-      </div>
+      </div> */}
 
       {/* Content section */}
       <div className="p-6 space-y-4">
@@ -146,38 +146,6 @@ const ProjectCard = ({
 
 function page() {
     const router = useRouter()
-      const projects = [
-    {
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop",
-      title: "Penetration Testing Suite",
-      description: "Comprehensive penetration testing framework with automated vulnerability assessment, custom payload generation, and detailed security reporting for enterprise networks.",
-      tags: ["Python", "Security", "Automation", "Testing"],
-      builtOn: ["Django", "PostgreSQL", "Redis", "Celery"],
-      complexity: "Advanced",
-      githubUrl: "https://github.com/example/pentest-suite",
-      viewProjectUrl: "https://pentest-demo.com"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=250&fit=crop",
-      title: "Secure Chat Application",
-      description: "End-to-end encrypted messaging platform with zero-knowledge architecture, perfect forward secrecy, and quantum-resistant cryptography for maximum privacy.",
-      tags: ["JavaScript", "Encryption", "WebRTC", "Privacy"],
-      builtOn: ["Node.js", "Socket.io", "React", "MongoDB"],
-      complexity: "Intermediate",
-      githubUrl: "https://github.com/example/secure-chat",
-      viewProjectUrl: "https://secure-chat-demo.com"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop",
-      title: "IoT Security Monitor",
-      description: "Real-time monitoring system for IoT devices with anomaly detection, traffic analysis, and automated threat response capabilities for smart home networks.",
-      tags: ["C++", "IoT", "Machine Learning", "Monitoring"],
-      builtOn: ["Raspberry Pi", "TensorFlow", "MQTT", "InfluxDB"],
-      complexity: "Beginner",
-      githubUrl: "https://github.com/example/iot-monitor",
-      viewProjectUrl: "https://iot-monitor-demo.com"
-    }
-  ];
   return (
     <div className='min-h-screen w-screen bg-neutral-950 flex justify-start items-center flex-col'>
         <div className="w-5/6 py-16">
@@ -186,7 +154,7 @@ function page() {
             <button onClick={() => router.push("/")} className={`px-6 py-1 pb-1.5  border border-transparent rounded-full text-green-500 cursor-pointer hover:border-green-500 hover:text-gray-300 transition-all duration-500 ${dmMono.className}`}> {"<-"} Back to Terminal</button>
         </div>
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-           {projects.map((project, index) => (
+           {fullProjectList.map((project: Project, index) => (
             <ProjectCard key={index} {...project} />
           ))}
         </div>

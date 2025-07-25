@@ -90,7 +90,7 @@ export default function Loader() {
       className={`min-h-screen bg-black ${theme.primary} font-mono flex flex-col justify-center items-center relative overflow-hidden`}
     >
       {/* Background Matrix Effect */}
-      <div className="absolute inset-0 opacity-20">
+      {/* <div className="absolute inset-0 opacity-20">
         {Array.from({ length: 100 }).map((_, i) => (
           <div
             key={i}
@@ -104,7 +104,7 @@ export default function Loader() {
             {String.fromCharCode(33 + Math.floor(Math.random() * 94))}
           </div>
         ))}
-      </div>
+      </div> */}
 
       <div className="z-10 text-center max-w-2xl px-4">
         {/* Arch Linux Logo ASCII */}
@@ -121,7 +121,7 @@ export default function Loader() {
            \`/++++++++++++++:
           \`/+++ooooooooo+++/
          ./ooosssso++osssssso+\`
-        .oossssso-\`\`\`\`/ossssss+\`
+        .oossssso-\`/ossssss+\`
        -osssssso.      :ssssssso.
       :osssssss/        osssso+++.
      /ossssssss/        +ssssooo/-
@@ -132,7 +132,7 @@ export default function Loader() {
 `}
         </pre>
 
-        <h1 className="text-2xl md:text-4xl font-bold mb-4 text-purple-400">ARCH LINUX PORTFOLIO</h1>
+        <h1 className="text-2xl md:text-4xl font-bold mb-4 text-purple-400">Adarsh Pandit</h1>
 
         <div className="mb-8">
           <div className="text-sm mb-2">Loading System...</div>
